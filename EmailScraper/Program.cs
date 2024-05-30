@@ -66,6 +66,9 @@ namespace EmailScraper
         
         [Association(ThisKey = nameof(Sender), OtherKey=nameof(EmailScraper.Employee.Email), CanBeNull = true)]
         public Employee Employee { get; set; }
+        
+        [Association(ThisKey = nameof(MessageID), OtherKey=nameof(RecipientInfo.MessageID))]
+        public IEnumerable<RecipientInfo> Recipients { get; set; }
     }
     
     [Table(Name = "referenceinfo")]
@@ -91,7 +94,7 @@ namespace EmailScraper
         public int RecipientID { get; set; }
         
         [Column(Name = "mid")]
-        public string MessageID { get; set; }
+        public int MessageID { get; set; }
         
         [Column(Name = "rtype")]
         public string RecipientType { get; set; }
@@ -137,38 +140,59 @@ namespace EmailScraper
             if (searchTerm is null)
                 return;
 
-            var terms = searchTerm.Split(' ');
+            var termsRegex = Regex.Matches(searchTerm, "\".+\"|\\b\\S+\\b");
+
+            var terms = new List<string>();
+            
+            for (var i = 0; i < termsRegex.Count; i++)
+            {
+                var term = termsRegex[i];
+                terms.Add(term.Value.Trim('\"')); //trim quotes - note this will remove an intentionally placed quotes in the keywords, not ideal but something to take care of later
+            }
             
             //an immediate issue I notice is that this doesn't take into account word boundaries
             //SQL doesn't support regex as far as I'm aware, and I am unsure how to account for this issue.
-            //You could filter the results again after having performed the query and populated the entities.
+            //You could filter the results again after having performed the query and populated the entity relations but
+            //that seems messy.
             
             var messageQuery =
                 from message in db.Messages
-                where terms.All( x => message.Body.Contains(x)) || terms.All( x => message.Subject.Contains(x))
+                where terms.All( x => message.Body.Contains(x)) //this is a very clumsy solution to this particular problem
+                      || terms.All( x => message.Subject.Contains(x))
+                      || terms.All( x => message.Sender.Contains(x))
                 select message;
 
             //load associated employees along with messages
             messageQuery = messageQuery.LoadWith(messages => messages.Employee);
+            messageQuery = messageQuery.LoadWith(messages => messages.Recipients); //this causes a significant performance drop
 
             Console.WriteLine($"---------------------------------");
             
-            foreach (var message in messageQuery.Take(10))
+            foreach (var message in messageQuery.Take(1))
             {
                 //Log some info about the employee if they're not null
                 if (message.Employee != null)
                 {
                     Console.WriteLine($"Employee: {message.Employee.FirstName} {message.Employee.LastName}");
                 }
+                
                 Console.WriteLine($"Sender: {message.Sender}");
+                
+                Console.Write("Recipients: ");
+                foreach (var recipientInfo in message.Recipients)
+                {
+                    Console.Write($"{recipientInfo.RecipientValue}, ");
+                }
+                Console.Write("\n");
+                
                 Console.WriteLine($"Subject: {message.Subject}");
                 Console.WriteLine($"\nBody:\n{message.Body}");
                 
                 Console.WriteLine($"---------------------------------");
-               
-                //Console.WriteLine($"Email from {message.Employee.FirstName} {message.Employee.LastName}");
-                //Console.Write(message.Body);
             }
+            
+            //This seems to have a very low memory profile - it jumped up from about 16mbs to 28mbs during a test with the profiler attached, which seems ideal.
+            //This does run a fairly expensive search on the SQL server though and thus presents another avenue for optimisations and improvements.
         }
     }
 }
