@@ -179,7 +179,7 @@ namespace EmailScraper
 
             Console.WriteLine($"---------------------------------");
             
-            foreach (var message in messageQuery.Take(1))
+            foreach (var message in messageQuery.Take(10))
             {
                 //Log some info about the employee if they're not null
                 if (message.Employee != null)

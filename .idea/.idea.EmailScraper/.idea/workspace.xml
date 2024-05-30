@@ -7,7 +7,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e21c3c0c-aed3-4dc6-a18e-bc39acb162b0" name="Changes" comment="" />
+    <list default="true" id="e21c3c0c-aed3-4dc6-a18e-bc39acb162b0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.EmailScraper/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EmailScraper/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EmailScraper/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EmailScraper/Program.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -89,7 +92,7 @@
       <workItem from="1716966442295" duration="901000" />
       <workItem from="1716968081969" duration="1630000" />
       <workItem from="1716986150700" duration="56000" />
-      <workItem from="1716987356781" duration="16799000" />
+      <workItem from="1716987356781" duration="17710000" />
     </task>
     <servers />
   </component>
