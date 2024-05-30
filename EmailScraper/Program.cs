@@ -6,6 +6,7 @@ using LinqToDB.Mapping;
 
 namespace EmailScraper
 {
+    #region Containers
     [Table(Name = "employeelist")]
     public class Employee
     {
@@ -60,6 +61,9 @@ namespace EmailScraper
         
         [Column(Name = "folder")]
         public string Folder { get; set; }
+        
+        [Association(ThisKey = nameof(Sender), OtherKey=nameof(EmailScraper.Employee.Email))]
+        public Employee Employee { get; set; }
     }
     
     [Table(Name = "referenceinfo")]
@@ -73,6 +77,9 @@ namespace EmailScraper
         
         [Column(Name = "reference")]
         public string RecipientType { get; set; }
+        
+        [Association(ThisKey = nameof(MessageID), OtherKey=nameof(Messages.MessageID))]
+        public Messages Message { get; set; }
     }
     
     [Table(Name = "recipientinfo")]
@@ -92,31 +99,54 @@ namespace EmailScraper
         
         [Column(Name = "dater")]
         public string Dater { get; set; }
+        
+        [Association(ThisKey = nameof(MessageID), OtherKey=nameof(Messages.MessageID))]
+        public Messages Message { get; set; }
+    }
+    #endregion
+
+    public class EnronData : LinqToDB.Data.DataConnection
+    {
+        public ITable<Employee> EmployeeList => this.GetTable<Employee>();
+        public ITable<Messages> Messages => this.GetTable<Messages>();
+        public ITable<ReferenceInfo> ReferenceInfo => this.GetTable<ReferenceInfo>();
+        public ITable<RecipientInfo> RecipientInfo => this.GetTable<RecipientInfo>();
+        
+        public EnronData(DataOptions options) : base(options) { }
     }
     
     internal class Program
     {
         public static void Main(string[] args)
         {
+            //  We establish a connection to our MySQL database which houses the imported MySQL dump.
+            //  in my use case, this is hosted locally on my machine.
+            //
+            //  In a real world use case, this login/connection info would not be stored in plaintext like it is here,
+            //  and would represent a security risk if done so.
+            
             var options = new DataOptions()
                 .UseMySql(@"Server=localhost;Database=enron_dump;Uid=root;Pwd=root;");
+            var db = new EnronData(options);
 
-// pass configured options to data context constructor
-            var db = new DataContext(options);
-
-            Console.WriteLine("Enter a keyword to search for:");
+            Console.WriteLine("Enter keywords to search for:");
             var searchTerm = Console.ReadLine();
+
+            if (searchTerm is null)
+                return;
+
+            var terms = searchTerm.Split(' ');
             
-            var employeeLists = db.GetTable<Employee>();
+            //var employeeLists = db.GetTable<Employee>();
 
-            IQueryable<Employee> employeeQuery =
-                from employee in employeeLists
-                where employee.FirstName.Contains(searchTerm)
-                select employee;
+            var messageQuery =
+                from message in db.Messages
+                where terms.All( x => message.Body.Contains(x))
+                select message;
 
-            foreach (var employee in employeeQuery)
+            foreach (var message in messageQuery)
             {
-                Console.WriteLine(employee.FirstName);
+                Console.Write(message.Body);
             }
         }
     }
