@@ -134,13 +134,17 @@ namespace EmailScraper
                 .UseMySql(@"Server=localhost;Database=enron_dump;Uid=root;Pwd=root;");
             var db = new EnronData(options);
 
+            //this doesn't currently use the commandline arguments, but that's a fairly trivial change.
+            
             Console.WriteLine("Enter keywords to search for:");
             var searchTerm = Console.ReadLine();
 
             if (searchTerm is null)
                 return;
 
-            var termsRegex = Regex.Matches(searchTerm, "\".+\"|\\b\\S+\\b");
+            //this splits the search time up into individual words, or groups of words if they're surrounded by quotes ("")
+            //allows us to search for phrases as well as key words
+            var termsRegex = Regex.Matches(searchTerm, "\"[^\"]+\"|\\b\\S+\\b");
 
             var terms = new List<string>();
             
@@ -149,6 +153,10 @@ namespace EmailScraper
                 var term = termsRegex[i];
                 terms.Add(term.Value.Trim('\"')); //trim quotes - note this will remove an intentionally placed quotes in the keywords, not ideal but something to take care of later
             }
+            
+            //I've spent far too much time getting all the various bits and pieces working, unfamiliar as I am with the tools, that I ran out of time to add and/or support for the search terms.
+            //If I were to add support for it, it'd generate a binary tree with each and/or representing a node and each search term being a leaf.
+            //I could then abstract the terms away into their own class and allow me to evaluate and construct the query to account for the groupings involved.
             
             //an immediate issue I notice is that this doesn't take into account word boundaries
             //SQL doesn't support regex as far as I'm aware, and I am unsure how to account for this issue.
@@ -159,7 +167,7 @@ namespace EmailScraper
                 from message in db.Messages
                 where terms.All( x => message.Body.Contains(x)) //this is a very clumsy solution to this particular problem
                       || terms.All( x => message.Subject.Contains(x))
-                      || terms.All( x => message.Sender.Contains(x))
+                      || terms.All( x => message.Sender.Contains(x)) //this also fails to check recipients, as they're loaded afterwards
                 select message;
 
             //load associated employees along with messages
@@ -191,8 +199,17 @@ namespace EmailScraper
                 Console.WriteLine($"---------------------------------");
             }
             
+            //If I were to make more improvements, I'd add tools to explore the results from the initial search - the ability to browse the replies/earlier messages in an email chain.
+            //I'd also add the ability to look at the emails sent by a particular user that appears in the results.
+            
             //This seems to have a very low memory profile - it jumped up from about 16mbs to 28mbs during a test with the profiler attached, which seems ideal.
             //This does run a fairly expensive search on the SQL server though and thus presents another avenue for optimisations and improvements.
+            
+            //In terms of improvements to how this runs, I would need more experience with the toolset. I've never used linq-to-db before and my SQL is pretty rusty. 
+            //SQl should be able to handle much larger databases than this and the queries it runs should be faster than what I've achieved. The way queries are constructed
+            //in my solution is primitive - they're not optimised very well at all.
+            
+            //The toolset I'm using is an unofficial version of Microsofts own linq-to-db library, but this one supports MySQL.
         }
     }
 }
