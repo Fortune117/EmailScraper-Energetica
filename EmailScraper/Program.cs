@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using LinqToDB;
 using LinqToDB.Mapping;
 
@@ -62,7 +64,7 @@ namespace EmailScraper
         [Column(Name = "folder")]
         public string Folder { get; set; }
         
-        [Association(ThisKey = nameof(Sender), OtherKey=nameof(EmailScraper.Employee.Email))]
+        [Association(ThisKey = nameof(Sender), OtherKey=nameof(EmailScraper.Employee.Email), CanBeNull = true)]
         public Employee Employee { get; set; }
     }
     
@@ -137,16 +139,35 @@ namespace EmailScraper
 
             var terms = searchTerm.Split(' ');
             
-            //var employeeLists = db.GetTable<Employee>();
-
+            //an immediate issue I notice is that this doesn't take into account word boundaries
+            //SQL doesn't support regex as far as I'm aware, and I am unsure how to account for this issue.
+            //You could filter the results again after having performed the query and populated the entities.
+            
             var messageQuery =
                 from message in db.Messages
-                where terms.All( x => message.Body.Contains(x))
+                where terms.All( x => message.Body.Contains(x)) || terms.All( x => message.Subject.Contains(x))
                 select message;
 
-            foreach (var message in messageQuery)
+            //load associated employees along with messages
+            messageQuery = messageQuery.LoadWith(messages => messages.Employee);
+
+            Console.WriteLine($"---------------------------------");
+            
+            foreach (var message in messageQuery.Take(10))
             {
-                Console.Write(message.Body);
+                //Log some info about the employee if they're not null
+                if (message.Employee != null)
+                {
+                    Console.WriteLine($"Employee: {message.Employee.FirstName} {message.Employee.LastName}");
+                }
+                Console.WriteLine($"Sender: {message.Sender}");
+                Console.WriteLine($"Subject: {message.Subject}");
+                Console.WriteLine($"\nBody:\n{message.Body}");
+                
+                Console.WriteLine($"---------------------------------");
+               
+                //Console.WriteLine($"Email from {message.Employee.FirstName} {message.Employee.LastName}");
+                //Console.Write(message.Body);
             }
         }
     }

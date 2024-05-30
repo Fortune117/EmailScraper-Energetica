@@ -22,6 +22,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/47e473daee48f95ffd97a4c78dda6fd79d8758a5f287a14a0e96844d026fb94/DataContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5320849a27d6a3431f1c62621e30a86f7a149247ea72c3d171c62916861e4ae/TableAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/813cc932f172343be19af0dfe25f77479ea7824bf4121b8d9e762a5fa9dc6c4/AssociationAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/dcbfa01b04cf41428c450497fe791f216d5784e018f0561258f6163d68335/ColumnAttribute.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
@@ -91,7 +92,7 @@
       <workItem from="1716966442295" duration="901000" />
       <workItem from="1716968081969" duration="1630000" />
       <workItem from="1716986150700" duration="56000" />
-      <workItem from="1716987356781" duration="7131000" />
+      <workItem from="1716987356781" duration="11502000" />
     </task>
     <servers />
   </component>
