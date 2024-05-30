@@ -157,8 +157,8 @@ namespace EmailScraper
                 terms.Add(term.Value.Trim('\"')); //trim quotes - note this will remove an intentionally placed quotes in the keywords, not ideal but something to take care of later
             }
             
-            //I've spent far too much time getting all the various bits and pieces working, unfamiliar as I am with the tools, that I ran out of time to add and/or support for the search terms.
-            //If I were to add support for it, it'd generate a binary tree with each and/or representing a node and each search term being a leaf.
+            //I've spent far too much time getting all the various bits and pieces working, unfamiliar as I am with the tools, that I ran out of time to add support for and/or in the search.
+            //If I were to add support for it, I'd generate a binary tree with each and/or representing a node and each search term being a leaf.
             //I could then abstract the terms away into their own class and allow me to evaluate and construct the query to account for the groupings involved.
             
             //an immediate issue I notice is that this doesn't take into account word boundaries
