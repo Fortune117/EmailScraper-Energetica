@@ -8,30 +8,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e21c3c0c-aed3-4dc6-a18e-bc39acb162b0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.vs/EmailScraper/v17/.suo" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vs/EmailScraper/v17/DocumentLayout.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EmailScraper/App.config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EmailScraper/LinqToDB.Templates/CopyMe.MySql.tt.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EmailScraper/LinqToDB.Templates/DataAnnotations.ttinclude" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EmailScraper/LinqToDB.Templates/DataModel.ttinclude" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EmailScraper/LinqToDB.Templates/EditableObject.ttinclude" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EmailScraper/LinqToDB.Templates/Equatable.ttinclude" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EmailScraper/LinqToDB.Templates/Humanizer.ttinclude" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EmailScraper/LinqToDB.Templates/LinqToDB.MySql.Tools.ttinclude" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EmailScraper/LinqToDB.Templates/LinqToDB.MySql.ttinclude" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EmailScraper/LinqToDB.Templates/LinqToDB.Tools.ttinclude" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EmailScraper/LinqToDB.Templates/LinqToDB.ttinclude" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EmailScraper/LinqToDB.Templates/MultipleFiles.ttinclude" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EmailScraper/LinqToDB.Templates/NotifyDataErrorInfo.ttinclude" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EmailScraper/LinqToDB.Templates/NotifyPropertyChanged.ttinclude" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EmailScraper/LinqToDB.Templates/ObsoleteAttributes.ttinclude" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EmailScraper/LinqToDB.Templates/PluralizationService.ttinclude" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EmailScraper/LinqToDB.Templates/T4Model.ttinclude" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EmailScraper/LinqToDB.Templates/Validation.ttinclude" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EmailScraper/packages.config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emails.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/enron-mysqldum_v5 - Copy.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/enron-mysqldum_v5.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.EmailScraper/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EmailScraper/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EmailScraper/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EmailScraper/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +91,7 @@
       <workItem from="1716966442295" duration="901000" />
       <workItem from="1716968081969" duration="1630000" />
       <workItem from="1716986150700" duration="56000" />
-      <workItem from="1716987356781" duration="2804000" />
+      <workItem from="1716987356781" duration="4218000" />
     </task>
     <servers />
   </component>
