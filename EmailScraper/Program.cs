@@ -5,6 +5,9 @@ using System.Text.RegularExpressions;
 using LinqToDB;
 using LinqToDB.Mapping;
 
+//This uses the linq2db package from here: https://github.com/linq2db/linq2db
+//Allows me to bridge the gap between MySQL and C# in a readable and convenient way.
+//I've never used something like this before so it was quite the learning experience!
 
 namespace EmailScraper
 {
